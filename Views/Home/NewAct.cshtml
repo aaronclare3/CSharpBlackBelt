@@ -1,0 +1,36 @@
+@model Belt_exam.Models.Act
+<h2>Plan Your Wedding</h2>
+<a href="/home">Home</a>
+<a href="/logout">Logout</a>
+
+<div class="form">
+    <form action="processact" method ="POST">
+        <div class="row">
+            <label asp-for="@Model.Title">Title</label>
+            <input asp-for="@Model.Title">
+            <span class="text-danger" asp-validation-for="@Model.Title"></span>
+
+        </div>
+        <div class="row">
+            <label asp-for="@Model.Date">Date</label>
+            <input asp-for="@Model.Date">
+            <span class="text-danger" asp-validation-for="@Model.Date"></span>
+        </div>
+        <div class="row">
+            <label asp-for="@Model.Duration">Duration</label>
+            <input asp-for="@Model.Duration">
+            <select asp-for="@Model.DurationType">
+                <option value="Minutes">Minutes</option>
+                <option value="Hours">Hours</option>
+                <option value="Days">Days</option>
+            </select>
+            <span class="text-danger" asp-validation-for="@Model.Duration"></span>
+        </div>
+        <div class="row">
+            <label asp-for="@Model.Description">Description</label>
+            <input asp-for="@Model.Description">
+            <span class="text-danger" asp-validation-for="@Model.Description"></span>
+        </div>
+        <button class="btn btn-primary">Create!</button>
+    </form>
+</div>

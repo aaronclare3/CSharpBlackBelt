@@ -1,0 +1,38 @@
+@model Belt_exam.Models.Wrapper 
+@{
+    bool Leave(List<Attending> myusers){
+        foreach(var user in myusers){
+            if(ViewBag.curruser.FirstName == user.ThisUser.FirstName){
+                return true;
+            }else{
+                return false;
+            }
+            }
+            return false;
+        }
+}
+<a href="/home">Home</a>
+<a href="/logout">Logout</a>
+
+@if(@ViewBag.curract.Coordinator.FirstName == ViewBag.curruser.FirstName){
+    <td><a href="/remove/@ViewBag.curractid">Delete Activity</a></td>
+}else{
+    if(Leave(@ViewBag.curract.UsersAttending) == true){
+    <td><a href="/leave/@ViewBag.curractid">Leave</a></td>
+}else{
+    <td><a href="/join/@ViewBag.curractid">Join</a></td>
+}
+}
+
+
+
+<h1>Event Title: @Model.OneAct.Title</h1>
+<h4>Description: @Model.OneAct.Description</h4>
+<h5>Coordinator: @Model.OneAct.Coordinator.FirstName</h5>
+
+<h3>User's Attending:</h3>
+<ul>
+    @foreach(var x in Model.OneAct.UsersAttending){
+        <li>@x.ThisUser.FirstName</li>
+    }
+</ul>

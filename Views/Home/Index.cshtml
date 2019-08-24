@@ -1,0 +1,68 @@
+﻿@model Belt_exam.Models.Attending
+@{
+    bool Leave(List<Attending> myusers){
+        foreach(var user in myusers){
+            if(ViewBag.curruser.FirstName == user.ThisUser.FirstName){
+                return true;
+            }else{
+                return false;
+            }
+            }
+            return false;
+        }
+}
+@using System.ComponentModel.DataAnnotations;
+@using System;
+@using System.ComponentModel.DataAnnotations.Schema;
+@using System.Collections.Generic;
+
+@{
+    TimeSpan thisTimeSpan(DateTime mytime){
+        return DateTime.Now.Subtract(mytime);
+    }
+}
+
+<h1>Dojo Activity Center</h1>
+<a href="/logout">Logout</a>
+
+<div class="container">
+    <div class="row">
+        <div class="col-10">
+            <div class="table">
+                <table class="table-hover">
+                        <tr class="text-success">
+                            <td>Activity</td>
+                            <td>Date and Time</td>
+                            <td>Duration</td>
+                            <td>Event Coordinator</td>
+                            <td>No. of Participants</td>
+                            <td>Action</td>
+                        </tr>
+                        @foreach(var act in ViewBag.AllActs){
+                            if(@act.Date>DateTime.Now){
+
+                                <tr>
+                                    <td><a href="/activity/@act.ActId">@act.Title</a></td>
+                                    <td>@act.Date.ToString("MM/dd/yyyy h:mm tt")</td>
+                                    <td>@act.Duration @act.DurationType</td>
+                                    <td>@act.Coordinator.FirstName</td>
+                                    <td>@act.UsersAttending.Count</td>
+                                    @if(@act.Coordinator.UserId == ViewBag.curruser.UserId){
+                                        <td><a href="/remove/@act.ActId">Delete Activity</a></td>
+                                    }else{
+                                        if(Leave(@act.UsersAttending) == true){
+                                        <td><a href="/leave/@act.ActId">Leave</a></td>
+                                    }else{
+                                        <td><a href="/join/@act.ActId">Join</a></td>
+                                    }
+                                    }
+                                    
+                                </tr>
+                            }
+                        }
+                </table>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary"><a class="text-light" href="new">New Activity</a></button>
+</div>
